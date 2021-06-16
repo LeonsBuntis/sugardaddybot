@@ -25,8 +25,9 @@ const bot = new Telegram(process.env.BOT_TOKEN);
             msg = `DADDY !!!SOLD!!! ABANDON THE SHIP -${newTrx} BTC`;
         }
     }
-    else {
-        msg = `no new trx detected`;
+
+    if (!msg) {
+        return;
     }
 
     let chatIds = await getChatIds();
