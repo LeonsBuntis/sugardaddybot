@@ -25,7 +25,7 @@ const checkNewTrx = async () => {
     console.log(`latest trx -> ${latestTrx.hash}`);
     console.log(`last known trx -> ${lastKnownTrxHash}`);
 
-    if (latestTrx.hash == lastKnownTrxHash) {
+    if (latestTrx.hash.trim() == lastKnownTrxHash.trim()) {
         console.log('transactions are the same');
 
         return null;

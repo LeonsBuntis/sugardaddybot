@@ -66,7 +66,7 @@ const getLastTrx = async (address) => {
         
         if (lastTrx.length > 0){
         
-            return lastTrx[0].LastTrx;
+            return lastTrx[0].LastTrx.trim();
         }
 
         return null;
