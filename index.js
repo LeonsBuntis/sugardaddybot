@@ -23,6 +23,8 @@ const GetLastBalance = (chatId, reply) => {
     
     checkNewTrx(sugarDaddyAddress)
         .then(newTrx => {
+            console.log(`new trx amount => ${newTrx}`);
+
             if (newTrx) {
                 if (Math.round(newTrx) == 0) {
                     reply(`daddy got his %%% feels good +${newTrx} BTC`);
