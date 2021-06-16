@@ -9,7 +9,7 @@ const getLastTransaction = async () => {
         let lastTx = response.data.txs[0];
 
         console.log(lastTx);
-        
+
         return lastTx;
     } catch (error) {
         console.log(error);
@@ -22,7 +22,10 @@ const checkNewTrx = async () => {
     const latestTrx = await getLastTransaction();
     const lastKnownTrxHash = await getLastTrx(sugarDaddyAddress);
 
-    if (latestTrx.hash === lastKnownTrxHash) {
+    console.log(`latest trx -> ${latestTrx.hash}`);
+    console.log(`last known trx -> ${lastKnownTrxHash}`);
+
+    if (latestTrx.hash == lastKnownTrxHash) {
         console.log('transactions are the same');
 
         return null;
