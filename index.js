@@ -2,8 +2,6 @@ const { Composer, Stage, Scene, session } = require('micro-bot');
 const { checkNewTrx } = require('./bl');
 const axios = require('axios').default;
 
-const sugarDaddyAddress = '1P5ZEDWTKTFGxQjZphgWPQUpe554WKDfHQ';
-
 const bot = new Composer();
 
 bot.start(({ reply }) => {
@@ -21,6 +19,8 @@ bot.command('last_balance', (ctx) => GetLastBalance(ctx.update.message.chat.id, 
 bot.hears('h', (ctx) => ctx.reply('42'));
 
 const GetLastBalance = (chatId, reply) => {
+    const sugarDaddyAddress = '1P5ZEDWTKTFGxQjZphgWPQUpe554WKDfHQ';
+    
     checkNewTrx(sugarDaddyAddress)
         .then(newTrx => {
             if (newTrx) {
