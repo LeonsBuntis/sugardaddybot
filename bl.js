@@ -34,7 +34,7 @@ const checkNewTrx = async () => {
 
         tryUpdateLastTrx(sugarDaddyAddress, latestTrx.hash)
 
-        return latestTrx;
+        return latestTrx.result / 100000000;
     }
 };
 

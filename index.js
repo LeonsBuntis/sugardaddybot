@@ -21,7 +21,13 @@ bot.hears('h', (ctx) => ctx.reply('42'));
 const GetLastBalance = (chatId, reply) => {
     let newTrx = checkNewTrx();
     if (newTrx) {
-        reply(`new trx detected -> ${newTrx}`);
+        if (Math.round(newTrx) == 0) {
+            reply(`daddy got his %%% feels good +${newTrx}`);
+        } else if (Math.round(newTrx) > 0){
+            reply(`Sugar daddy BOUGHT something +${newTrx}!!!! GOGOGO BUY`);
+        } else {
+            reply(`DADDY !!!SOLD!!! ABANDON THE SHIP -${newTrx}`);
+        }
     }
 };
 
