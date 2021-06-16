@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-const { getLastTrx, tryUpdateLastTrx } = require('');
+const { getLastTrx, tryUpdateLastTrx } = require('./pg_repo');
 
 const sugarDaddyAddress = '1P5ZEDWTKTFGxQjZphgWPQUpe554WKDfHQ';
 
