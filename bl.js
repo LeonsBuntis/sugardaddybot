@@ -8,6 +8,8 @@ const getLastTransaction = async () => {
         const response = await axios.get(`https://blockchain.info/rawaddr/${sugarDaddyAddress}?limit=1`);
         let lastTx = response.data.txs[0];
 
+        console.log(lastTx);
+        
         return lastTx;
     } catch (error) {
         console.log(error);
