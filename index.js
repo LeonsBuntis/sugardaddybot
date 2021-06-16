@@ -16,7 +16,7 @@ bot.start(({ reply }) => {
 
 bot.command('last_balance', (ctx) => GetLastBalance(ctx.update.message.chat.id, ctx.reply));
 
-bot.hears('h', (ctx) => GetLastBalance(ctx.update.message.chat.id, ctx.reply));
+bot.hears('h', (ctx) => ctx.reply('42'));
 
 const GetLastBalance = (chatId, reply) => {
     let newTrx = checkNewTrx();
