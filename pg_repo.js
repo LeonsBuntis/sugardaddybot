@@ -21,7 +21,7 @@ const withSql = async (query, values) => {
 
 const getChatIds = async () => {
     try {
-        let chatIds = await withSql('SELECT "ChatId" FROM public."Chats";');
+        let chatIds = await withSql('SELECT "ChatId" FROM public."SugarDaddySubscribers";');
         // console.log(chatIds);
         return chatIds;
     } catch (error) {
@@ -31,7 +31,7 @@ const getChatIds = async () => {
 
 const tryAddChatId = async (chatId) => {
     try {
-        const query = 'INSERT into public."Chats" values ($1);';
+        const query = 'INSERT into public."SugarDaddySubscribers" values ($1);';
         await withSql(query, [chatId]);
 
         return true;
@@ -49,7 +49,7 @@ const tryAddChatId = async (chatId) => {
 
 const tryRemoveChatId = async (chatId) => {
     try {
-        const query = 'delete from public."Chats" where "ChatId" = $1;';
+        const query = 'delete from public."SugarDaddySubscribers" where "ChatId" = $1;';
         await withSql(query, [chatId]);
 
         return true;
