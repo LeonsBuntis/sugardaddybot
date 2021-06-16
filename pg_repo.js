@@ -66,12 +66,12 @@ const getLastTrx = async (address) => {
         
         if (lastTrx.length > 0){
         
-            return lastTrx[0];
+            return lastTrx[0].LastTrx;
         }
 
         return null;
     } catch (error) {
-        return [];
+        return null;
     }
 }
 
