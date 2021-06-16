@@ -6,7 +6,7 @@ const bot = new Composer();
 const commands = [
     '/subscribe - Subscribes',
     '/unsubscribe - Unsubscribes',
-    '/check_new_trx - Checks new trx pls dont spam more than 1 a minute'
+    // '/check_new_trx - Checks new trx pls dont spam more than 1 a minute'
 ]
 
 bot.start(({ reply }) => {

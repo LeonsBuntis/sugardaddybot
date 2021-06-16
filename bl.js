@@ -6,7 +6,7 @@ const getLastTransaction = async (sugarDaddyAddress) => {
         const response = await axios.get(`https://blockchain.info/rawaddr/${sugarDaddyAddress}?limit=1`);
         let lastTx = response.data.txs[0];
 
-        console.log(lastTx);
+        // console.log(lastTx);
 
         return lastTx;
     } catch (error) {
@@ -20,8 +20,8 @@ const checkNewTrx = async (sugarDaddyAddress) => {
     const latestTrx = await getLastTransaction(sugarDaddyAddress);
     const lastKnownTrxHash = await getLastTrx(sugarDaddyAddress);
 
-    console.log(`latest trx -> ${latestTrx.hash}`);
-    console.log(`last known trx -> ${lastKnownTrxHash}`);
+    // console.log(`latest trx -> ${latestTrx.hash}`);
+    // console.log(`last known trx -> ${lastKnownTrxHash}`);
 
     if (latestTrx.hash.trim() == lastKnownTrxHash.trim()) {
         console.log('transactions are the same');
