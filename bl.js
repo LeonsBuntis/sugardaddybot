@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 const { getLastTrx, tryUpdateLastTrx } = require('./pg_repo');
 
-const getLastTransaction = async () => {
+const getLastTransaction = async (sugarDaddyAddress) => {
     try {
         const response = await axios.get(`https://blockchain.info/rawaddr/${sugarDaddyAddress}?limit=1`);
         let lastTx = response.data.txs[0];
@@ -17,7 +17,7 @@ const getLastTransaction = async () => {
 };
 
 const checkNewTrx = async (sugarDaddyAddress) => {
-    const latestTrx = await getLastTransaction();
+    const latestTrx = await getLastTransaction(sugarDaddyAddress);
     const lastKnownTrxHash = await getLastTrx(sugarDaddyAddress);
 
     console.log(`latest trx -> ${latestTrx.hash}`);
