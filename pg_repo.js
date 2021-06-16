@@ -77,7 +77,7 @@ const getLastTrx = async (address) => {
 
 const tryUpdateLastTrx = async (address, newTrx) => {
     try {
-        let r = await withSql('update public."LastTransactions" update "LastTrx" = $1 WHERE "Address" = $2;', [newTrx, address]);
+        let r = await withSql('update public."LastTransactions" set "LastTrx" = $1 WHERE "Address" = $2;', [newTrx, address]);
         
         console.log(r);
         
