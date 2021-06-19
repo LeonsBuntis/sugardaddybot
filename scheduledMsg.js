@@ -18,7 +18,7 @@ const bot = new Telegram(process.env.BOT_TOKEN);
 
     if (newTrx) {
         if (Math.round(newTrx) == 0) {
-            msg = `daddy got his %%% +${newTrx} BTC feels good`;
+            // msg = `daddy got his %%% +${newTrx} BTC feels good`;
         } else if (Math.round(newTrx) > 0) {
             msg = `Sugar daddy BOUGHT +${newTrx} BTC!!!! GOGOGO BUY`;
         } else {
