@@ -20,7 +20,7 @@ bot.start(({ reply }) => {
 
 bot.command('subscribe', (ctx) => Commands.subscribe(ctx.update.message.chat.id, ctx.reply));
 bot.command('unsubscribe', (ctx) => Commands.unsubscribe(ctx.update.message.chat.id, ctx.reply));
-bot.command('check_new_trx', async (ctx) => await Commands.lookForNewTrx(ctx.reply));
+// bot.command('check_new_trx', async (ctx) => await Commands.lookForNewTrx(ctx.reply));
 
 bot.hears('h', (ctx) => ctx.reply('42'));
 
