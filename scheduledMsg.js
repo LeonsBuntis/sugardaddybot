@@ -3,27 +3,30 @@ console.log(`Run job on -> ${new Date()}`);
 const { Telegram } = require('micro-bot');
 const { getChatIds } = require('./pg_repo.js');
 
-const { checkNewTrx } = require('./bl');
+const { checkNewTrx, getBtcPrice } = require('./bl');
 
 const bot = new Telegram(process.env.BOT_TOKEN);
 
 (async () => {
     const sugarDaddyAddress = '1P5ZEDWTKTFGxQjZphgWPQUpe554WKDfHQ';
 
-    const newTrx = await checkNewTrx(sugarDaddyAddress);
+    const newTrxs = await checkNewTrx(sugarDaddyAddress);
 
-    console.log(`new trx amount => ${newTrx}`);
+    console.log(`new trxs => ${newTrxs}`);
 
     let msg = '';
 
-    if (newTrx) {
-        if (Math.round(newTrx) == 0) {
-            // msg = `daddy got his %%% +${newTrx} BTC feels good`;
-        } else if (Math.round(newTrx) > 0) {
-            msg = `Sugar daddy BOUGHT +${newTrx} BTC!!!! GOGOGO BUY`;
-        } else {
-            msg = `DADDY !!!SOLD!!! ABANDON THE SHIP -${newTrx} BTC`;
-        }
+    if (newTrxs && newTrxs.length > 0) {
+        const lastPrice = await getBtcPrice();
+
+        msg = `New transactions detected at ${Math.round(lastPrice)} BTC-USD:`;
+        newTrxs.forEach(newTrx => {
+            if (newTrx > 0) {
+                msg += `\r\n+${newTrx} BTC`;
+            } else {
+                msg += `\r\n${newTrx} BTC`;
+            }
+        });
     }
 
     if (!msg) {

@@ -1,14 +1,13 @@
 const axios = require('axios').default;
 const { getLastTrx, tryUpdateLastTrx } = require('./pg_repo');
 
-const getLastTransaction = async (sugarDaddyAddress) => {
+const getLastTransaction = async (sugarDaddyAddress, limit = 20) => {
     try {
-        const response = await axios.get(`https://blockchain.info/rawaddr/${sugarDaddyAddress}?limit=1`);
-        let lastTx = response.data.txs[0];
+        const response = await axios.get(`https://blockchain.info/rawaddr/${sugarDaddyAddress}?limit=${limit}`);
 
-        // console.log(lastTx);
+        console.log(response);
 
-        return lastTx;
+        return response.data.txs;
     } catch (error) {
         console.log(error);
 
@@ -16,24 +15,62 @@ const getLastTransaction = async (sugarDaddyAddress) => {
     }
 };
 
+const isLatestTrx = async (latestTrx, lastKnownTrxHash) => latestTrx.hash.trim() == lastKnownTrxHash;
+
 const checkNewTrx = async (sugarDaddyAddress) => {
-    const latestTrx = await getLastTransaction(sugarDaddyAddress);
-    const lastKnownTrxHash = await getLastTrx(sugarDaddyAddress);
+    const latestTrxs = await getLastTransaction(sugarDaddyAddress);
+    const lastKnownTrxHash = (await getLastTrx(sugarDaddyAddress)).trim();
+
+    const newTrxs = [];
+
+    for (let i = 0; i < latestTrxs.length; i++) {
+        const latestTrx = latestTrxs[i];
+
+        if (!isLatestTrx(latestTrx, lastKnownTrxHash)) {
+            newTrxs.push(latestTrx);
+        } else {
+            break;
+        }
+    }
 
     // console.log(`latest trx -> ${latestTrx.hash}`);
     // console.log(`last known trx -> ${lastKnownTrxHash}`);
 
-    if (latestTrx.hash.trim() == lastKnownTrxHash.trim()) {
+    if (newTrxs.length === 0) {
         console.log('transactions are the same');
-
         return null;
     } else {
         console.log('new trx detected!');
 
-        tryUpdateLastTrx(sugarDaddyAddress, latestTrx.hash)
+        const trxsAmounts = [];
 
-        return latestTrx.result / 100000000;
+        newTrxs.forEach(newTrx => {
+
+            tryUpdateLastTrx(sugarDaddyAddress, newTrx.hash);
+
+            let latestAmount = latestTrx.result / 100000000;
+
+            if (Math.round(latestAmount) != 0) {
+                trxsAmounts.push(latestAmount);
+            }
+        });
+
+        return trxsAmounts;
     }
 };
 
-module.exports = { checkNewTrx };
+const getBtcPrice = async () => {
+    try {
+        const response = await axios.get(`https://api.blockchain.com/v3/exchange/tickers/BTC-USD`);
+
+        console.log(response);
+
+        return response.data.last_trade_price;
+    } catch (error) {
+        console.log(error);
+
+        throw error;
+    }
+};
+
+module.exports = { checkNewTrx, getBtcPrice };
